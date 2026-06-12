@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — Midwest Apex</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { inter: ['Inter','sans-serif'], serif: ['Instrument Serif','serif'] },
+    colors: { accent: '#5E0ED7', accent2: '#A06BF5' },
+  } } };
+</script>
+<style>
+  html, body { margin: 0; padding: 0; background: #000; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  .font-firs { font-family: 'TT Firs Neue', 'Inter', system-ui, sans-serif; }
+  .font-serif { font-family: 'Instrument Serif', serif; }
+  .grad-text { background: linear-gradient(294deg, #5E0ED7 20%, #A06BF5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .clip-btn { clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px); }
+  .cta-arrow { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+  .cta-group:hover .cta-arrow { transform: translate(4px, -4px); }
+</style>
+</head>
+<body class="text-white min-h-screen flex items-center justify-center overflow-hidden relative">
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh]"
+       style="background: radial-gradient(60% 60% at 50% 0%, rgba(94,14,215,0.30) 0%, rgba(94,14,215,0.06) 45%, rgba(0,0,0,0) 72%);"></div>
+
+  <div class="relative z-10 text-center px-6 max-w-xl">
+    <div class="flex items-center justify-center gap-3 mb-10">
+      <span class="inline-flex w-8 h-8 rounded-full items-center justify-center" style="border:2px solid #5E0ED7;">
+        <span class="w-[10px] h-[10px] rounded-full" style="background:#5E0ED7;"></span>
+      </span>
+      <span class="font-firs text-xl font-semibold uppercase tracking-wide">Midwest Apex</span>
+    </div>
+
+    <h1 class="font-firs uppercase font-semibold tracking-tight leading-[0.9]" style="font-size: clamp(4rem, 18vw, 10rem);">
+      4<span class="grad-text">0</span>4
+    </h1>
+    <p class="mt-6 text-[18px] sm:text-[20px] leading-[1.5] text-white/70">
+      This page slipped off the map.
+      <span class="font-serif italic text-white">Let's get you back to the top.</span>
+    </p>
+
+    <a href="/" class="cta-group mt-10 clip-btn inline-flex items-center gap-3 bg-white text-black px-7 py-4 text-base sm:text-lg font-semibold uppercase tracking-wide">
+      Back to Home
+      <svg class="cta-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 7h10v10" /><path d="M7 17 17 7" />
+      </svg>
+    </a>
+  </div>
+</body>
+</html>

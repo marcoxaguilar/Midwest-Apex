@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clientele — Midwest Apex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      fontFamily: { inter: ['Inter','sans-serif'], serif: ['Instrument Serif','serif'] },
+      colors: { accent: '#5E0ED7', accent2: '#A06BF5', lav: '#EFECF6' },
+    } },
+  };
+</script>
+<style>
+  html, body { margin: 0; padding: 0; background: #EFECF6; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  .font-firs { font-family: 'TT Firs Neue', 'Inter', system-ui, sans-serif; }
+  .font-serif { font-family: 'Instrument Serif', serif; }
+
+  .grad-text { background: linear-gradient(294deg, #5E0ED7 20%, #A06BF5); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .clip-btn { clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px); }
+  .cta-arrow { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+  .cta-group:hover .cta-arrow { transform: translate(4px, -4px); }
+  a.link-row { transition: color .25s ease, padding-left .25s ease; }
+  a.link-row:hover { color: #fff; padding-left: 6px; }
+  .wordmark-outline { -webkit-text-stroke: 1.5px rgba(160,107,245,0.55); color: transparent; }
+
+  /* Logo tile */
+  .logo-tile {
+    position: relative;
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid rgba(94,14,215,0.10);
+    box-shadow: 0 8px 22px rgba(31,18,56,0.06);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .logo-tile:hover { box-shadow: 0 14px 30px rgba(31,18,56,0.10); }
+  image-slot { display: block; }
+
+  .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp .7s cubic-bezier(.22,1,.36,1) forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: none; } }
+  ::selection { background: rgba(160,107,245,0.30); }
+
+  /* ===== Freedom comparison section ===== */
+  @font-face {
+    font-family: 'Mazzard H'; font-weight: 400; font-style: normal;
+    src: url('https://db.onlinewebfonts.com/t/eb5b5ee332420add9a40ee988cb6ac37.woff2') format('woff2'),
+         url('https://db.onlinewebfonts.com/t/eb5b5ee332420add9a40ee988cb6ac37.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'Mazzard H'; font-weight: 500; font-style: normal;
+    src: url('https://db.onlinewebfonts.com/t/875fffdfa62169a0f131e90f37f1faf4.woff2') format('woff2'),
+         url('https://db.onlinewebfonts.com/t/875fffdfa62169a0f131e90f37f1faf4.woff') format('woff');
+  }
+  .freedom, .freedom * { font-family: 'Mazzard H', 'Inter', sans-serif; }
+  .freedom-grid { display: flex; flex-direction: column; gap: 24px; }
+  @media (min-width: 1024px) {
+    .freedom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(36px, 6vw, 96px); row-gap: 24px;
+      align-items: start;
+      padding: 0 clamp(0px, 2.92vw, 40px);
+      max-width: 1100px;
+    }
+  }
+</style>
+<script src="image-slot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-40 backdrop-blur-md" style="background: rgba(239,236,246,0.72);">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 md:px-12 py-4">
+    <a href="index.html" class="flex items-center gap-3">
+      <span class="w-8 h-8 rounded-full flex items-center justify-center" style="border:2px solid #5E0ED7;">
+        <span class="w-[10px] h-[10px] rounded-full" style="background:#5E0ED7;"></span>
+      </span>
+      <span class="font-firs text-lg font-semibold uppercase tracking-wide text-black hidden sm:inline">Midwest Apex</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 lg:gap-10">
+      <a href="index.html#about" class="text-sm font-semibold tracking-widest uppercase text-black/80 hover:text-black transition-colors">Services</a>
+      <a href="seo-checker.html" class="text-sm font-semibold tracking-widest uppercase text-black/80 hover:text-black transition-colors">SEO Checker</a>
+      <a href="clientele.html" class="text-sm font-semibold tracking-widest uppercase text-accent">Clientele</a>
+    </nav>
+    <a href="tel:+12243054785" class="cta-group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide" style="color:#5E0ED7;">
+      Work With Us
+      <svg class="cta-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="px-5 sm:px-8 md:px-12 pt-16 sm:pt-24 pb-10">
+  <div class="max-w-7xl mx-auto">
+    <p class="text-xs font-semibold tracking-[0.28em] uppercase text-accent">Our Clientele</p>
+    <div class="mt-6 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+      <h1 class="font-firs uppercase font-semibold tracking-tight leading-[0.9] text-black" style="font-size: clamp(2.6rem, 7vw, 5.6rem);">
+        Brands we made<br /><span class="grad-text">impossible to ignore</span>
+      </h1>
+      <p class="max-w-sm text-[16px] sm:text-[18px] leading-[1.5] text-black/65">
+        The businesses we've built, ranked, and put on the map.
+        <span class="font-serif italic text-black"> Good company.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENT ORBIT ============ -->
+<section class="px-5 sm:px-8 md:px-12 pt-2 pb-24" data-screen-label="Client Orbit">
+  <p class="text-center text-[11px] font-semibold tracking-[0.24em] uppercase text-black/40 mb-10">In good company — trusted across the Midwest</p>
+  <div class="orbit-wrap" style="position:relative; width:min(92vw,720px); margin:0 auto; aspect-ratio:1/1;">
+    <!-- soft glow behind orb -->
+    <div style="position:absolute; inset:6%; border-radius:50%; background: radial-gradient(circle at 50% 50%, rgba(94,14,215,0.12), rgba(160,107,245,0.07) 42%, rgba(254,136,27,0.05) 66%, rgba(255,255,255,0) 76%); filter: blur(6px); pointer-events:none;"></div>
+    <!-- center video orb -->
+    <div class="orbit-center" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:clamp(170px,38%,330px); aspect-ratio:1/1; border-radius:50%; overflow:hidden; box-shadow: 0 18px 60px rgba(94,14,215,0.18), inset 0 0 0 1px rgba(255,255,255,0.6);">
+      <video id="freedom-hls" autoplay loop muted playsinline style="width:160%; height:160%; object-fit:cover; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);"></video>
+    </div>
+    <!-- orbiting logos placed by JS -->
+    <div id="orbit-logos"></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="relative z-10 w-full overflow-hidden text-white" style="background:#000;" data-screen-label="Footer">
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh]" style="background: radial-gradient(60% 60% at 50% 0%, rgba(94,14,215,0.30) 0%, rgba(94,14,215,0.06) 45%, rgba(0,0,0,0) 72%);"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 pt-20 sm:pt-24 pb-10">
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-white/50">Ready when you are</p>
+        <h2 class="font-firs mt-5 uppercase font-semibold tracking-tight leading-[0.9]" style="font-size: clamp(2.6rem, 8vw, 6rem);">
+          Let's make it <span class="grad-text">dominate</span>
+        </h2>
+        <p class="mt-6 text-[17px] sm:text-[19px] leading-[1.5] text-white/65 max-w-lg">
+          You bring the business. <span class="font-serif italic text-white">We make it impossible to ignore.</span>
+        </p>
+      </div>
+      <a href="tel:+12243054785" class="cta-group shrink-0 clip-btn inline-flex items-center gap-3 bg-white text-black px-7 py-5 text-lg sm:text-xl font-semibold uppercase tracking-wide">
+        Work With Us
+        <svg class="cta-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+    </div>
+
+    <div class="mt-16 sm:mt-20 h-px w-full" style="background: linear-gradient(to right, rgba(160,107,245,0.5), rgba(255,255,255,0.06));"></div>
+
+    <div class="mt-12 grid grid-cols-2 gap-y-12 gap-x-8 md:grid-cols-4 lg:gap-x-12">
+      <div class="col-span-2 md:col-span-1 flex flex-col gap-5">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex w-8 h-8 rounded-full items-center justify-center" style="border:2px solid #5E0ED7;">
+            <span class="w-[10px] h-[10px] rounded-full" style="background:#5E0ED7;"></span>
+          </span>
+          <span class="font-firs text-xl font-semibold uppercase tracking-wide">Midwest Apex</span>
+        </div>
+        <p class="text-[13px] leading-[1.55] text-white/55 max-w-[240px]">Full-stack growth partner. Built right, ranked higher, found everywhere across the Midwest.</p>
+        <div class="flex items-center gap-3 pt-1">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.facebook.com/MidwestApex" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Services</p>
+        <nav class="flex flex-col gap-3 text-[15px] text-white/70">
+          <a class="link-row" href="index.html#about">AI-Optimized SEO</a>
+          <a class="link-row" href="index.html#about">Website &amp; App Builds</a>
+          <a class="link-row" href="index.html#about">Google Business Setup</a>
+          <a class="link-row" href="index.html#about">E-Commerce</a>
+          <a class="link-row" href="index.html#about">CRM Builds</a>
+          <a class="link-row" href="index.html#about">Content &amp; Blog Posts</a>
+        </nav>
+      </div>
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Explore</p>
+        <nav class="flex flex-col gap-3 text-[15px] text-white/70">
+          <a class="link-row" href="index.html#about">Services</a>
+          <a class="link-row" href="seo-checker.html">SEO Checker</a>
+          <a class="link-row" href="clientele.html">Clientele</a>
+          <a class="link-row" href="#">Case Studies</a>
+        </nav>
+      </div>
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Get in touch</p>
+        <div class="flex flex-col gap-4 text-[15px]">
+          <a href="tel:+12243054785" class="cta-group inline-flex items-center gap-2 font-semibold grad-text text-[19px]">224-305-4785</a>
+          <p class="text-white/55 text-[14px] leading-[1.5]">Serving the Midwest<br/>&amp; beyond — remote-first</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-20 sm:mt-24 select-none">
+      <div class="font-firs font-semibold uppercase leading-none wordmark-outline whitespace-nowrap" style="font-size: clamp(3.4rem, 17vw, 14rem); letter-spacing:-0.02em;">Midwest Apex</div>
+    </div>
+
+    <div class="mt-12 pt-7 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+      <p class="text-[12px] tracking-wider uppercase text-white/45">© 2026 Midwest Apex — All rights reserved</p>
+      <div class="flex items-center gap-6 text-[12px] tracking-wider uppercase text-white/45">
+        <a class="hover:text-white transition-colors" href="#">Privacy</a>
+        <a class="hover:text-white transition-colors" href="#">Terms</a>
+        <span class="font-serif italic normal-case tracking-normal text-white/60 text-[14px]">Built beautiful in the Midwest</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Place one logo tile per client, orbiting around the center video orb.
+  const COUNT = 7;
+  const orbit = document.getElementById('orbit-logos');
+  const RADIUS = 41;   // % of container from center
+  const START = -90;   // first logo at top
+  for (let i = 1; i <= COUNT; i++) {
+    const ang = (START + (i - 1) * (360 / COUNT)) * Math.PI / 180;
+    const x = 50 + RADIUS * Math.cos(ang);
+    const y = 50 + RADIUS * Math.sin(ang);
+    const tile = document.createElement('div');
+    tile.className = 'logo-tile flex items-center justify-center';
+    tile.style.cssText = 'position:absolute; left:' + x + '%; top:' + y + '%; transform:translate(-50%,-50%); width:clamp(66px,13.5%,128px); aspect-ratio:3/2; padding:clamp(8px,1.2%,15px);';
+    const slot = document.createElement('image-slot');
+    slot.id = 'client-logo-' + i;
+    slot.setAttribute('fit', 'contain');
+    slot.setAttribute('shape', 'rounded');
+    slot.setAttribute('radius', '8');
+    slot.setAttribute('placeholder', 'Logo');
+    slot.style.width = '100%';
+    slot.style.height = '100%';
+    tile.appendChild(slot);
+    orbit.appendChild(tile);
+  }
+
+  /* HLS video in the circle */
+  (function initHls() {
+    const src = 'https://stream.mux.com/bnYL6x5cAX6WiJv2pOKpITehZd3NVdXpj3ylJFpX5Lk.m3u8';
+    const video = document.getElementById('freedom-hls');
+    if (!video) return;
+    if (window.Hls && window.Hls.isSupported()) {
+      const hls = new window.Hls({ startLevel: -1, capLevelToPlayerSize: false, maxMaxBufferLength: 60, enableWorker: true });
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
+        hls.currentLevel = hls.levels.length - 1;
+        video.play().catch(() => {});
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = src;
+      video.play().catch(() => {});
+    }
+  })();
+</script>
+</body>
+</html>
