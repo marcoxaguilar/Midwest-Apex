@@ -343,12 +343,8 @@
   }
 
   // tier assignment (by url): which are shown as base vs premium
-  const TIER = {
-    'ironcladroofing.co':'seo', 'verdantgrounds.com':'seo', 'glowskincare.com':'seo', 'forgeathletic.com':'seo',
-    'maisonlakeforest.com':'premium', 'emberoak.com':'premium', 'lumenaesthetics.co':'premium',
-    'onyxdetailing.co':'premium', 'sterlingvaughn.com':'premium',
-  };
-  const tierOf = (p) => TIER[p.url] || 'seo';
+  // All CSS concept cards are the base tier; Premium = motion/video builds only.
+  const tierOf = (p) => 'seo';
 
   function screenHTML(p) {
     const chromeBg = p.light ? '#f0eef2' : 'rgba(255,255,255,0.05)';
@@ -366,7 +362,7 @@
         <div class="orb a" style="left:-8%;top:-16%;opacity:${oA};background:radial-gradient(circle,${p.glow},rgba(0,0,0,0) 70%);animation-duration:${t1}s;"></div>
         <div class="orb b" style="right:-12%;top:6%;opacity:${oB};background:radial-gradient(circle,${hexA(m.mo2,1)},rgba(0,0,0,0) 70%);animation-duration:${t2}s;"></div>
         <div class="orb c" style="left:16%;bottom:-20%;opacity:${oC};background:radial-gradient(circle,${hexA(p.accent,1)},rgba(0,0,0,0) 70%);animation-duration:${t3}s;"></div>`;
-    const shine = (tierOf(p) === 'premium' && !p.light) ? `<div class="shine" style="animation-duration:${ts}s;"></div>` : '';
+    const shine = ''; // sweep reserved for the premium motion tier
     return `
       <div class="chrome" style="background:${chromeBg};border-bottom:1px solid ${chromeBorder};">
         ${dots}
