@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Footer Section</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          inter: ['Inter', 'sans-serif'],
+          serif: ['Instrument Serif', 'serif'],
+        },
+        colors: { accent: '#5E0ED7', accent2: '#A06BF5' },
+      },
+    },
+  };
+</script>
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #000;
+  }
+  .font-firs { font-family: 'TT Firs Neue', 'Inter', system-ui, sans-serif; }
+  .font-serif { font-family: 'Instrument Serif', serif; }
+
+  .grad-text {
+    background: linear-gradient(294deg, #5E0ED7 20%, #A06BF5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Clipped-corner CTA button to echo the service cards */
+  .clip-btn {
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+  }
+  /* Giant baseline wordmark — gradient stroke outline */
+  .wordmark-outline {
+    -webkit-text-stroke: 1.5px rgba(160,107,245,0.55);
+    color: transparent;
+  }
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  a.link-row { transition: color .25s ease, padding-left .25s ease; }
+  a.link-row:hover { color: #fff; padding-left: 6px; }
+  .cta-arrow { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+  .cta-group:hover .cta-arrow { transform: translate(4px, -4px); }
+</style>
+</head>
+<body>
+<footer class="relative w-full overflow-hidden text-white" data-screen-label="Footer" style="background:#000;">
+  <!-- ambient purple glow -->
+  <div class="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh]"
+       style="background: radial-gradient(60% 60% at 50% 0%, rgba(94,14,215,0.30) 0%, rgba(94,14,215,0.06) 45%, rgba(0,0,0,0) 72%);"></div>
+  <div class="pointer-events-none absolute bottom-0 right-0 w-[60vw] h-[40vh]"
+       style="background: radial-gradient(50% 70% at 80% 100%, rgba(160,107,245,0.18) 0%, rgba(0,0,0,0) 70%);"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 pt-24 sm:pt-32 pb-10">
+
+    <!-- ============ CTA BLOCK ============ -->
+    <div class="reveal flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-white/50">
+          Ready when you are
+        </p>
+        <h2 class="font-firs mt-5 uppercase font-semibold tracking-tight leading-[0.9]"
+            style="font-size: clamp(2.6rem, 8vw, 6rem);">
+          Let's make it
+          <span class="grad-text">dominate</span>
+        </h2>
+        <p class="mt-6 text-[17px] sm:text-[19px] leading-[1.5] text-white/65 max-w-lg">
+          You bring the business.
+          <span class="font-serif italic text-white"> We make it impossible to ignore.</span>
+        </p>
+      </div>
+
+      <a href="tel:+12243054785"
+         class="cta-group shrink-0 clip-btn inline-flex items-center gap-3 bg-white text-black px-7 py-5 text-lg sm:text-xl font-semibold uppercase tracking-wide">
+        Work With Us
+        <svg class="cta-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 7h10v10" />
+          <path d="M7 17 17 7" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- ============ DIVIDER ============ -->
+    <div class="reveal mt-16 sm:mt-20 h-px w-full" style="background: linear-gradient(to right, rgba(160,107,245,0.5), rgba(255,255,255,0.06));"></div>
+
+    <!-- ============ LINK GRID ============ -->
+    <div class="reveal mt-12 grid grid-cols-2 gap-y-12 gap-x-8 md:grid-cols-4 lg:gap-x-12">
+      <!-- Brand / tagline -->
+      <div class="col-span-2 md:col-span-1 flex flex-col gap-5">
+        <div class="flex items-center gap-3">
+          <span class="inline-flex w-8 h-8 rounded-full items-center justify-center" style="border:2px solid #5E0ED7;">
+            <span class="w-[10px] h-[10px] rounded-full" style="background:#5E0ED7;"></span>
+          </span>
+          <span class="font-firs text-xl font-semibold uppercase tracking-wide">Midwest Apex</span>
+        </div>
+        <p class="text-[13px] leading-[1.55] text-white/55 max-w-[240px]">
+          Full-stack growth partner. Built right, ranked higher, found everywhere across the Midwest.
+        </p>
+        <div class="flex items-center gap-3 pt-1">
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://www.facebook.com/MidwestApex" target="_blank" rel="noopener" aria-label="Facebook" class="w-9 h-9 rounded-full flex items-center justify-center border border-white/15 text-white/70 hover:text-white hover:border-accent2 transition-colors">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Services</p>
+        <nav class="flex flex-col gap-3 text-[15px] text-white/70">
+          <a class="link-row" href="#">AI-Optimized SEO</a>
+          <a class="link-row" href="#">Website &amp; App Builds</a>
+          <a class="link-row" href="#">Google Business Setup</a>
+          <a class="link-row" href="#">E-Commerce</a>
+          <a class="link-row" href="#">CRM Builds</a>
+          <a class="link-row" href="#">Content &amp; Blog Posts</a>
+        </nav>
+      </div>
+
+      <!-- Explore -->
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Explore</p>
+        <nav class="flex flex-col gap-3 text-[15px] text-white/70">
+          <a class="link-row" href="#about">Services</a>
+          <a class="link-row" href="seo-checker.html">SEO Checker</a>
+          <a class="link-row" href="#">Clientele</a>
+          <a class="link-row" href="#">Case Studies</a>
+        </nav>
+      </div>
+
+      <!-- Contact -->
+      <div class="flex flex-col gap-4">
+        <p class="text-[11px] font-semibold tracking-[0.22em] uppercase text-white/40">Get in touch</p>
+        <div class="flex flex-col gap-4 text-[15px]">
+          <a href="tel:+12243054785" class="cta-group inline-flex items-center gap-2 font-semibold grad-text text-[19px]">
+            224-305-4785
+          </a>
+          <p class="text-white/55 text-[14px] leading-[1.5]">Serving the Midwest<br/>&amp; beyond — remote-first</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ GIANT WORDMARK ============ -->
+    <div class="reveal mt-20 sm:mt-28 select-none">
+      <div class="font-firs font-semibold uppercase leading-none wordmark-outline whitespace-nowrap"
+           style="font-size: clamp(3.4rem, 17vw, 14rem); letter-spacing:-0.02em;">
+        Midwest Apex
+      </div>
+    </div>
+
+    <!-- ============ BOTTOM BAR ============ -->
+    <div class="reveal mt-12 pt-7 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+      <p class="text-[12px] tracking-wider uppercase text-white/45">© 2026 Midwest Apex — All rights reserved</p>
+      <div class="flex items-center gap-6 text-[12px] tracking-wider uppercase text-white/45">
+        <a class="hover:text-white transition-colors" href="#">Privacy</a>
+        <a class="hover:text-white transition-colors" href="#">Terms</a>
+        <span class="font-serif italic normal-case tracking-normal text-white/60 text-[14px]">Built beautiful in the Midwest</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.06) + 's';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
