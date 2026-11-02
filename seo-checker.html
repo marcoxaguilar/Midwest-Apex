@@ -3,7 +3,28 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#46188A" />
 <title>SEO Checker — Midwest Apex</title>
+<meta name="description" content="Check your site’s SEO in seconds. A free tool from Midwest Apex." />
+<link rel="canonical" href="https://midwestapex.com/seo-checker.html" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Midwest Apex" />
+<meta property="og:url" content="https://midwestapex.com/seo-checker.html" />
+<meta property="og:title" content="Free SEO Checker — Midwest Apex" />
+<meta property="og:description" content="Check your site’s SEO in seconds. A free tool from Midwest Apex." />
+<meta property="og:image" content="https://midwestapex.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Midwest Apex — full-stack growth partner" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free SEO Checker — Midwest Apex" />
+<meta name="twitter:description" content="Check your site’s SEO in seconds. A free tool from Midwest Apex." />
+<meta name="twitter:image" content="https://midwestapex.com/og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -321,6 +342,7 @@ function Footer() {
             Full-stack growth partner. Built right, ranked higher, found everywhere — across the Midwest &amp; beyond.
           </p>
           <a href="tel:+12243054785" className="font-semibold grad-text text-[19px] w-fit">224-305-4785</a>
+          <a href="mailto:marcoaguilarseo@gmail.com" className="text-white/80 hover:text-white transition-colors text-[15px] w-fit break-all">marcoaguilarseo@gmail.com</a>
         </div>
 
         <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
@@ -351,9 +373,8 @@ function Footer() {
           <span className="text-[10px] uppercase tracking-widest opacity-50">Join the Journey:</span>
           <div className="flex items-center gap-3">
             {[
-              { I: Ico.Instagram, href: '#', label:'Instagram' },
+              { I: Ico.Instagram, href: 'https://www.instagram.com/midwest.apex', label:'Instagram' },
               { I: Ico.Facebook, href: 'https://www.facebook.com/MidwestApex', label:'Facebook' },
-              { I: Ico.Linkedin, href: '#', label:'LinkedIn' },
               { I: Ico.Music2, href: '#', label:'TikTok' },
             ].map(({I, href, label}, i) => (
               <a key={i} href={href} aria-label={label} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener' : undefined}
@@ -385,12 +406,13 @@ function App() {
             <span className="inline-flex w-7 h-7 rounded-full items-center justify-center" style={{ border:'2px solid #5E0ED7' }}>
               <span className="w-[9px] h-[9px] rounded-full" style={{ background:'#5E0ED7' }}></span>
             </span>
-            <span className="font-firs text-lg font-semibold uppercase tracking-wide text-white">Midwest Apex</span>
+            <span className="font-firs text-lg font-semibold uppercase tracking-wide text-white hidden lg:inline">Midwest Apex</span>
           </a>
-          <div className="hidden md:flex items-center gap-8 lg:gap-10">
+          <div className="hidden md:flex items-center gap-5 lg:gap-10">
             <a href="index.html#about" className="text-sm font-semibold tracking-widest uppercase text-white/70 hover:text-white transition-colors">Services</a>
+            <a href="marketing.html" className="text-sm font-semibold tracking-widest uppercase text-white/70 hover:text-white transition-colors">Marketing</a>
             <a href="seo-checker.html" className="text-sm font-semibold tracking-widest uppercase text-accent2">SEO Checker</a>
-            <a href="clientele.html" className="text-sm font-semibold tracking-widest uppercase text-white/70 hover:text-white transition-colors">Clientele</a>
+            <a href="showcase.html" className="text-sm font-semibold tracking-widest uppercase text-white/70 hover:text-white transition-colors">Showcase</a>
           </div>
           <a href="tel:+12243054785" className="cta-group hidden sm:inline-flex items-center gap-2 text-white text-sm font-semibold uppercase tracking-wide border border-white/20 rounded-full px-5 py-2.5 hover:bg-white hover:text-black transition-colors">
             Work With Us <Ico.ArrowUpRight size={16} className="cta-arrow" />

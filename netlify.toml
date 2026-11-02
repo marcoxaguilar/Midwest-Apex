@@ -1,14 +1,8 @@
 # Midwest Apex — static site (plain HTML/CSS/JS, no build step)
-# All images are embedded directly in the HTML as data URIs, so there are
-# no separate asset files or subfolders that need to upload.
 
 [build]
-  publish = "."        # serve the folder as-is
-  command = ""         # no build
-
-# Clean URLs work out of the box (/seo-checker -> seo-checker.html), and the
-# explicit ".html" links keep working too. A custom 404.html is served
-# automatically for unknown paths.
+  publish = "."
+  command = ""
 
 # Keep HTML fresh so edits show up immediately.
 [[headers]]
@@ -16,15 +10,28 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
-# Long-cache the icons (stable filenames).
-[[headers]]
-  for = "/apple-touch-icon.png"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+# Icons: short cache so icon changes show up within a day.
 [[headers]]
   for = "/favicon.ico"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/favicon-*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/apple-touch-icon.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/android-chrome-*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/manifest+json"
 
 # Motion clips — immutable, long cache
 [[headers]]
