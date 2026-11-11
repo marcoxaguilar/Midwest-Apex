@@ -17,14 +17,14 @@
 <meta property="og:url" content="https://midwestapex.com/seo-checker.html" />
 <meta property="og:title" content="Free SEO Checker — Midwest Apex" />
 <meta property="og:description" content="Check your site’s SEO in seconds. A free tool from Midwest Apex." />
-<meta property="og:image" content="https://midwestapex.com/og-image.png" />
+<meta property="og:image" content="https://midwestapex.com/og-image-v2.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Midwest Apex — full-stack growth partner" />
+<meta property="og:image:alt" content="Midwest Apex — Get found first. Get called first." />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Free SEO Checker — Midwest Apex" />
 <meta name="twitter:description" content="Check your site’s SEO in seconds. A free tool from Midwest Apex." />
-<meta name="twitter:image" content="https://midwestapex.com/og-image.png" />
+<meta name="twitter:image" content="https://midwestapex.com/og-image-v2.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
@@ -168,7 +168,7 @@ function MetricCard({ icon: I, label, score, note, show, delay }) {
       className="liquid-glass rounded-2xl p-5 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <span className="w-9 h-9 rounded-full flex items-center justify-center text-accent2" style={{ background:'rgba(160,107,245,0.12)' }}><I size={18} /></span>
-        <span className="font-firs text-2xl font-semibold" style={{ color }}>{show ? score : '—'}</span>
+        <span className="font-firs text-2xl font-semibold" style={{ color }}>{show && score != null ? score : '—'}</span>
       </div>
       <div>
         <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">{label}</p>
@@ -178,36 +178,113 @@ function MetricCard({ icon: I, label, score, note, show, delay }) {
   );
 }
 
-const METRICS = [
-  { icon: Ico.Gauge,      label: 'Performance',      score: 64, note: 'LCP 3.1s — images need compression & lazy-load.' },
-  { icon: Ico.FileText,   label: 'On-Page SEO',      score: 78, note: 'Solid titles; 4 pages missing meta descriptions.' },
-  { icon: Ico.Smartphone, label: 'Mobile',           score: 88, note: 'Responsive & tap-target friendly. Looking sharp.' },
-  { icon: Ico.Link,       label: 'Backlinks',        score: 52, note: '23 referring domains — room to build authority.' },
-  { icon: Ico.Sparkles,   label: 'AI Visibility',    score: 41, note: 'Thin schema. Weak signals for AI search engines.' },
-  { icon: Ico.Search,     label: 'Indexing',         score: 91, note: 'Clean sitemap, no crawl blockers detected.' },
+/* ---------------- Real audit: Google PageSpeed Insights (Lighthouse, mobile) ---------------- */
+const PSI_KEY = ''; // optional: paste a free Google API key here for a higher daily scan limit
+const pct = (s) => (s == null ? null : Math.round(s * 100));
+const avg = (arr) => { const v = arr.filter((x) => x != null); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null; };
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+
+const METRIC_SHELL = [
+  { icon: Ico.Gauge,      label: 'Performance' },
+  { icon: Ico.FileText,   label: 'On-Page SEO' },
+  { icon: Ico.Smartphone, label: 'Accessibility' },
+  { icon: Ico.Sparkles,   label: 'Best Practices' },
+  { icon: Ico.Search,     label: 'Indexing' },
+  { icon: Ico.Link,       label: 'Security' },
 ];
-const WINS = [
-  { ok: true,  t: 'HTTPS secure & valid SSL certificate' },
-  { ok: true,  t: 'Mobile-responsive across breakpoints' },
-  { ok: false, t: 'Missing structured data / schema markup' },
-  { ok: false, t: 'Largest Contentful Paint above 2.5s' },
-  { ok: false, t: '4 pages without meta descriptions' },
-  { ok: true,  t: 'XML sitemap present & submitted' },
-];
+
+function normalizeUrl(raw) {
+  let s = (raw || '').trim();
+  if (!s) return null;
+  if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+  try { const u = new URL(s); return u.hostname.includes('.') ? u.href : null; } catch (e) { return null; }
+}
+
+async function runAudit(url) {
+  const qs = new URLSearchParams({ url, strategy: 'mobile' });
+  ['performance', 'seo', 'accessibility', 'best-practices'].forEach((c) => qs.append('category', c));
+  if (PSI_KEY) qs.set('key', PSI_KEY);
+  let res;
+  try { res = await fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?' + qs.toString()); }
+  catch (e) { throw new Error("Couldn't reach Google's scanner. Check your connection and try again."); }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.lighthouseResult) {
+    const msg = (data.error && data.error.message) || '';
+    if (res.status === 429) throw new Error('The free scanner is busy right now. Try again in a minute.');
+    if (/DOCUMENT_REQUEST|DNS|NO_FCP|NOT_HTML|unreachable/i.test(msg)) throw new Error("We couldn't load that site. Double-check the address.");
+    throw new Error('Scan failed. Double-check the address and try again.');
+  }
+  return summarize(data.lighthouseResult);
+}
+
+function summarize(lh) {
+  const A = lh.audits || {}, C = lh.categories || {};
+  const sc = (id) => (A[id] && A[id].score != null ? A[id].score : null);
+  const cat = (k) => pct(C[k] && C[k].score);
+  const failing = (k) => ((C[k] && C[k].auditRefs) || []).filter((r) => r.weight > 0 && sc(r.id) != null && sc(r.id) < 1).length;
+
+  const perf = cat('performance'), seo = cat('seo'), acc = cat('accessibility'), bp = cat('best-practices');
+  const indexing = avg(['is-crawlable', 'robots-txt', 'http-status-code', 'canonical', 'crawlable-anchors'].map((id) => pct(sc(id))));
+  const https = sc('is-on-https');
+  const security = avg([pct(https), pct(sc('redirects-http'))]);
+  const lcp = A['largest-contentful-paint'];
+  const lcpSec = lcp && lcp.numericValue ? (lcp.numericValue / 1000).toFixed(1) : null;
+  const seoFails = failing('seo'), accFails = failing('accessibility'), bpFails = failing('best-practices');
+
+  const metrics = [
+    { ...METRIC_SHELL[0], score: perf, note: lcpSec ? ('Main content loads in ' + lcpSec + 's on mobile' + (lcpSec <= 2.5 ? ' — fast.' : ' — Google wants under 2.5s.')) : 'Mobile speed score from Google.' },
+    { ...METRIC_SHELL[1], score: seo, note: seoFails ? (plural(seoFails, 'on-page check') + ' failing — see the list.') : 'Every on-page SEO check passes.' },
+    { ...METRIC_SHELL[2], score: acc, note: accFails ? (plural(accFails, 'issue') + ' that can block visitors.') : 'No accessibility issues found.' },
+    { ...METRIC_SHELL[3], score: bp, note: bpFails ? (plural(bpFails, 'technical issue') + ' found.') : 'Follows modern web best practices.' },
+    { ...METRIC_SHELL[4], score: indexing, note: sc('is-crawlable') === 0 ? 'Something is blocking Google from indexing this page.' : 'Google can crawl and index this page.' },
+    { ...METRIC_SHELL[5], score: security, note: https === 1 ? 'Served securely over HTTPS.' : 'Not secure — the site is missing HTTPS.' },
+  ];
+
+  const ids = ['is-on-https', 'viewport', 'document-title', 'meta-description', 'largest-contentful-paint', 'image-alt', 'link-text', 'is-crawlable', 'robots-txt', 'canonical', 'http-status-code', 'hreflang'];
+  const checks = ids
+    .filter((id) => A[id] && A[id].score != null && A[id].scoreDisplayMode !== 'notApplicable')
+    .map((id) => {
+      const okv = id === 'largest-contentful-paint' ? A[id].score >= 0.9 : A[id].score === 1;
+      const t = id === 'largest-contentful-paint' ? ('Largest Contentful Paint: ' + (A[id].displayValue || '')) : A[id].title.replace(/`/g, '');
+      return { ok: okv, t };
+    })
+    .sort((x, y) => Number(x.ok) - Number(y.ok))
+    .slice(0, 8);
+
+  const overall = avg([perf, seo, acc, bp]) || 0;
+  const fixes = checks.filter((c) => !c.ok).length;
+  const verdict = overall >= 90 ? ['Strong', 'Your basics are solid. Let’s push you to the top spot.']
+    : overall >= 70 ? ['Decent — fixable', fixes ? ('You’re leaving rankings on the table. ' + plural(fixes, 'quick fix') + ' below.') : 'Good foundation with room to grow.']
+    : overall >= 50 ? ['Needs work', 'Customers are likely finding competitors first. Start with the red flags below.']
+    : ['Losing customers', 'Google is holding this site back. The red flags below are costing you calls.'];
+
+  return { overall, metrics, checks, verdict, finalUrl: lh.finalDisplayedUrl || lh.finalUrl || lh.requestedUrl };
+}
 
 /* ---------------- The checker tool ---------------- */
 function Checker() {
   const [url, setUrl] = useState('');
-  const [state, setState] = useState('idle'); // idle | scanning | done
-  const overall = 69;
+  const [state, setState] = useState('idle'); // idle | scanning | done | error
+  const [result, setResult] = useState(null);
+  const [err, setErr] = useState('');
 
-  const run = () => {
-    if (!url.trim()) { setUrl('yourbusiness.com'); }
-    setState('scanning');
-    setTimeout(() => setState('done'), 1700);
+  const run = async () => {
+    if (state === 'scanning') return;
+    const target = normalizeUrl(url);
+    if (!target) { setErr('Enter a website address, like yourbusiness.com'); setState('error'); return; }
+    setErr(''); setResult(null); setState('scanning');
+    try {
+      const r = await runAudit(target);
+      setResult(r); setState('done');
+    } catch (e) {
+      setErr(e.message || 'Scan failed. Try again.'); setState('error');
+    }
   };
 
-  const show = state === 'done';
+  const show = state === 'done' && !!result;
+  const overall = result ? result.overall : 0;
+  const metrics = result ? result.metrics : METRIC_SHELL.map((m) => ({ ...m, score: null, note: 'Scanning…' }));
+  const checks = result ? result.checks : [];
 
   return (
     <section className="w-full">
@@ -244,11 +321,16 @@ function Checker() {
           {state !== 'scanning' && <Ico.ArrowUpRight size={18} className="cta-arrow" />}
         </button>
       </motion.div>
-      <p className="text-center text-[12px] text-white/35 mt-4 tracking-wide">No signup • No card • Results in ~15 seconds</p>
+      {state === 'error'
+        ? <p role="alert" className="text-center text-[14px] text-rose-200 mt-4">{err}</p>
+        : <p className="text-center text-[12px] text-white/50 mt-4 tracking-wide">{state === 'scanning' ? 'Running a live Google Lighthouse scan on mobile — usually 20–40 seconds…' : 'No signup • No card • Live scan powered by Google Lighthouse'}</p>}
+      {show && result.finalUrl && (
+        <p className="text-center text-[13px] text-white/60 mt-2">Results for <span className="text-white">{result.finalUrl}</span></p>
+      )}
 
       {/* Results */}
       <AnimatePresence>
-        {state !== 'idle' && (
+        {(state === 'scanning' || state === 'done') && (
           <motion.div
             initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE }}
@@ -264,11 +346,11 @@ function Checker() {
                   </div>
                 )}
               </div>
-              <p className="font-firs text-lg font-semibold text-white mt-4 uppercase tracking-wide">{show ? 'Decent — fixable' : 'Analyzing…'}</p>
-              <p className="text-[13px] text-white/55 text-center mt-1 max-w-[230px]">{show ? 'You\u2019re leaving rankings on the table. Five quick wins below.' : 'Crawling pages & scoring signals.'}</p>
+              <p className="font-firs text-lg font-semibold text-white mt-4 uppercase tracking-wide">{show ? result.verdict[0] : 'Analyzing…'}</p>
+              <p className="text-[13px] text-white/60 text-center mt-1 max-w-[230px]">{show ? result.verdict[1] : 'Loading your site & scoring signals.'}</p>
 
               <div className="w-full mt-6 flex flex-col gap-2.5">
-                {WINS.map((w, i) => (
+                {checks.map((w, i) => (
                   <motion.div key={i}
                     initial={{ opacity: 0, x: -10 }}
                     animate={show ? { opacity: 1, x: 0 } : {}}
@@ -283,7 +365,7 @@ function Checker() {
 
             {/* Category grid */}
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {METRICS.map((m, i) => (
+              {metrics.map((m, i) => (
                 <MetricCard key={m.label} icon={m.icon} label={m.label} score={m.score} note={m.note} show={show} delay={0.25 + i*0.08} />
               ))}
               <div className="sm:col-span-2 liquid-glass rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
