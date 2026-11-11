@@ -179,7 +179,7 @@ function MetricCard({ icon: I, label, score, note, show, delay }) {
 }
 
 /* ---------------- Real audit: Google PageSpeed Insights (Lighthouse, mobile) ---------------- */
-const PSI_KEY = ''; // optional: paste a free Google API key here for a higher daily scan limit
+const PSI_KEY = 'AIzaSyCSaOv6sadyZgHqGmzrgwNzWgSo_xRj2_g'; // optional: paste a free Google API key here for a higher daily scan limit
 const pct = (s) => (s == null ? null : Math.round(s * 100));
 const avg = (arr) => { const v = arr.filter((x) => x != null); return v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length) : null; };
 const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
